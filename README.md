@@ -1,6 +1,6 @@
 # 🏭 Factory Control Dashboard
 
-> Last Updated: 2026-08-27 00:44:42 (UTC)
+> Last Updated: 2026-08-27 00:45:15 (UTC)
 
 ## 📈 CPA Blogs (15 Sites)
 
@@ -22,9 +22,15 @@
 | [cpa-smart-it](https://github.com/somsoo/cpa-smart-it) | [it.enjoy-onepage.com](https://it.enjoy-onepage.com) | 8 |
 | [cpa-tech-expo](https://github.com/somsoo/cpa-tech-expo) | [data.enjoy-onepage.com](https://data.enjoy-onepage.com) | 2 |
 
-## 📱 Threads Bots (0 Repositories)
+## 📱 Threads Bots (1 Repositories)
 
-*No bots registered yet.*
+### [threads-auto](https://github.com/somsoo/threads-auto)
+- **Operating Accounts (5):**
+  - `@mican_s___s_aaa`
+  - `@s___s_aaa`
+  - `@mcocoi99`
+  - `@so_cold_and_happy`
+  - `@giriq30`
 
 
 ## 🚀 Onepage Landings (0 Sites)
