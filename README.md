@@ -1,6 +1,6 @@
 # 🏭 Factory Control Dashboard
 
-> Last Updated: 2026-08-27 00:56:46 (UTC)
+> Last Updated: 2026-08-27 00:57:30 (UTC)
 
 ## 📈 CPA Blogs (15 Sites)
 
@@ -38,12 +38,14 @@
 | **@giriq30**<br>(아가리 다이어터) | <details><summary>🔍 페르소나 보기</summary><br><i>나이: 20대~30대. 성향: ENFP. 365일 다이어트를 결심하지만 배달앱 VIP를 놓치지 않는 모순의 극치.   [좋아하는 것] 밤 11시의 마라탕과 엽떡, 다이어트 보조제(먹으면 살 빠질 거란 헛된 믿음), 헬스장 등록(안 감), 남의 먹방.   [싫어하는 것] 퍽퍽한 닭가슴살, 거울에 비친 내 모습, "배불러서 한 입 남길게"라고 말하는 소식좌들, 혹독한 PT 쌤.   [말투 및 성격] 자기 비하와 유머가 적절히 섞여 있음. "다이어트한다고 샐러드 시키고 배달비 아깝다고 떡볶이 추가한 나, 정상인가요?" 식의 상황극. 남들에게 자기합리화를 동의받고 싶어 하는 유쾌한 캐릭터.</i></details> | 헬스장 꼴불견 저격, 닭가슴살 혐오, 바디프로필 유행 비판, 운동 안 하는 핑계 대결, 배달앱 VIP 합리화 | 12 / day | **8** |
 
 
-## 🚀 Onepage Landings (4 Sites)
+## 🚀 Onepage Landings (6 Sites)
 
 | Repository | Domain |
 |---|---|
 | [aicostcalc_site](https://github.com/somsoo/aicostcalc_site) | [aiapi.enjoy-onepage.com](https://aiapi.enjoy-onepage.com) |
+| [freelancer_tax_site](https://github.com/somsoo/freelancer_tax_site) | [tax-33.enjoy-onepage.com](https://tax-33.enjoy-onepage.com) |
 | [smallbizcalc_site](https://github.com/somsoo/smallbizcalc_site) | [smallbiz.enjoy-onepage.com](https://smallbiz.enjoy-onepage.com) |
 | [solar_calc_site](https://github.com/somsoo/solar_calc_site) | [solar.enjoy-onepage.com](https://solar.enjoy-onepage.com) |
+| [sudokuportal](https://github.com/somsoo/sudokuportal) | [sudokuportal.enjoy-onepage.com](https://sudokuportal.enjoy-onepage.com) |
 | [wonderweeks_site](https://github.com/somsoo/wonderweeks_site) | [wonderweeksportal.enjoy-onepage.com](https://wonderweeksportal.enjoy-onepage.com) |
 

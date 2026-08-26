@@ -25,7 +25,8 @@ def parse_bom_json(text):
 
 for repo in repos:
     repo_name = repo["name"]
-    raw_url = f"https://raw.githubusercontent.com/{GITHUB_USER}/{repo_name}/main/.factory.json"
+    branch = repo.get("default_branch", "main")
+    raw_url = f"https://raw.githubusercontent.com/{GITHUB_USER}/{repo_name}/{branch}/.factory.json"
     meta_resp = requests.get(raw_url, headers=headers)
     
     if meta_resp.status_code == 200:
@@ -39,7 +40,7 @@ for repo in repos:
                 meta["url"] = f"https://{meta['domain']}"
             
             if meta["type"] == "cpa":
-                camp_url = f"https://raw.githubusercontent.com/{GITHUB_USER}/{repo_name}/main/campaigns.json"
+                camp_url = f"https://raw.githubusercontent.com/{GITHUB_USER}/{repo_name}/{branch}/campaigns.json"
                 camp_resp = requests.get(camp_url, headers=headers)
                 if camp_resp.status_code == 200:
                     meta["campaign_count"] = len(parse_bom_json(camp_resp.text))
@@ -47,7 +48,7 @@ for repo in repos:
                     meta["campaign_count"] = 0
             
             elif meta["type"] == "threads":
-                db_url = f"https://raw.githubusercontent.com/{GITHUB_USER}/{repo_name}/main/database.json"
+                db_url = f"https://raw.githubusercontent.com/{GITHUB_USER}/{repo_name}/{branch}/database.json"
                 db_resp = requests.get(db_url, headers=headers)
                 if db_resp.status_code == 200:
                     db_data = parse_bom_json(db_resp.text)
