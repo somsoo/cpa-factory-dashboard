@@ -52,7 +52,7 @@ for repo in repos:
                 if db_resp.status_code == 200:
                     db_data = parse_bom_json(db_resp.text)
                     accounts = db_data.get("accounts", [])
-                    posts = db_data.get("posts", [])
+                    posts = db_data.get("post_logs", [])
                     
                     # Count posts per account
                     post_counts = {}
