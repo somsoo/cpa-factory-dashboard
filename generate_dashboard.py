@@ -39,7 +39,10 @@ for repo in repos:
             if meta["type"] == "cpa":
                 camp_url = f"https://raw.githubusercontent.com/{GITHUB_USER}/{repo_name}/main/campaigns.json"
                 camp_resp = requests.get(camp_url, headers=headers)
-                meta["campaign_count"] = len(camp_resp.json()) if camp_resp.status_code == 200 else 0
+                camp_text = camp_resp.text
+                if camp_text.startswith('\ufeff'):
+                    camp_text = camp_text[1:]
+                meta["campaign_count"] = len(json.loads(camp_text)) if camp_resp.status_code == 200 else 0
             
             factory_sites.append(meta)
         except Exception as e:
