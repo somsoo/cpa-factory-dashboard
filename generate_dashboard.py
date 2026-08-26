@@ -1,6 +1,7 @@
 import os
 import requests
 from datetime import datetime
+import json
 
 GITHUB_USER = "somsoo"
 TOKEN = os.environ.get("GITHUB_TOKEN")
@@ -19,6 +20,11 @@ if response.status_code != 200:
 repos = response.json()
 factory_sites = []
 
+def parse_bom_json(text):
+    if text.startswith('\ufeff'):
+        text = text[1:]
+    return json.loads(text)
+
 for repo in repos:
     repo_name = repo["name"]
     raw_url = f"https://raw.githubusercontent.com/{GITHUB_USER}/{repo_name}/main/.factory.json"
@@ -26,23 +32,31 @@ for repo in repos:
     
     if meta_resp.status_code == 200:
         try:
-            import json
-            text = meta_resp.text
-            if text.startswith('\ufeff'):
-                text = text[1:]
-            meta = json.loads(text)
+            meta = parse_bom_json(meta_resp.text)
             meta["repo"] = repo_name
-            if not meta.get("domain"):
+            if not meta.get("domain") and meta.get("type") != "threads":
                 meta["domain"] = f"{repo_name}.enjoy-onepage.com"
-            meta["url"] = f"https://{meta['domain']}"
+            
+            if meta.get("domain"):
+                meta["url"] = f"https://{meta['domain']}"
             
             if meta["type"] == "cpa":
                 camp_url = f"https://raw.githubusercontent.com/{GITHUB_USER}/{repo_name}/main/campaigns.json"
                 camp_resp = requests.get(camp_url, headers=headers)
-                camp_text = camp_resp.text
-                if camp_text.startswith('\ufeff'):
-                    camp_text = camp_text[1:]
-                meta["campaign_count"] = len(json.loads(camp_text)) if camp_resp.status_code == 200 else 0
+                if camp_resp.status_code == 200:
+                    meta["campaign_count"] = len(parse_bom_json(camp_resp.text))
+                else:
+                    meta["campaign_count"] = 0
+            
+            elif meta["type"] == "threads":
+                db_url = f"https://raw.githubusercontent.com/{GITHUB_USER}/{repo_name}/main/database.json"
+                db_resp = requests.get(db_url, headers=headers)
+                if db_resp.status_code == 200:
+                    db_data = parse_bom_json(db_resp.text)
+                    accounts = db_data.get("accounts", [])
+                    meta["accounts"] = [acc.get("username", "Unknown") for acc in accounts]
+                else:
+                    meta["accounts"] = []
             
             factory_sites.append(meta)
         except Exception as e:
@@ -61,8 +75,17 @@ readme_content += "|---|---|---|\n"
 for site in cpa_sites:
     readme_content += f"| [{site['repo']}](https://github.com/{GITHUB_USER}/{site['repo']}) | [{site['domain']}]({site['url']}) | {site.get('campaign_count', 0)} |\n"
 
-readme_content += f"\n## 📱 Threads Bots ({len(threads_bots)} Bots)\n\n"
-readme_content += "*No bots registered yet.*\n\n" if not threads_bots else ""
+readme_content += f"\n## 📱 Threads Bots ({len(threads_bots)} Repositories)\n\n"
+if not threads_bots:
+    readme_content += "*No bots registered yet.*\n\n"
+else:
+    for bot in threads_bots:
+        readme_content += f"### [{bot['repo']}](https://github.com/{GITHUB_USER}/{bot['repo']})\n"
+        accounts = bot.get("accounts", [])
+        readme_content += f"- **Operating Accounts ({len(accounts)}):**\n"
+        for acc in accounts:
+            readme_content += f"  - `@{acc}`\n"
+        readme_content += "\n"
 
 readme_content += f"\n## 🚀 Onepage Landings ({len(onepage_sites)} Sites)\n\n"
 readme_content += "*No onepage sites registered yet.*\n\n" if not onepage_sites else ""
