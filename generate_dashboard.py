@@ -51,29 +51,29 @@ for repo in repos:
                 db_resp = requests.get(db_url, headers=headers)
                 if db_resp.status_code == 200:
                     db_data = parse_bom_json(db_resp.text)
-                    accounts = db_data.get("accounts", [])
-                    posts = db_data.get("post_logs", [])
+                    meta['global_settings'] = db_data.get('global_settings', {})
+                    accounts = db_data.get('accounts', [])
+                    posts = db_data.get('post_logs', [])
                     
-                    # Count posts per account
                     post_counts = {}
                     for p in posts:
-                        acc_id = p.get("account_id")
-                        if p.get("status") == "posted" or p.get("posted_at"):
+                        acc_id = p.get('account_id')
+                        if p.get('status') == 'posted' or p.get('posted_at'):
                             post_counts[acc_id] = post_counts.get(acc_id, 0) + 1
                     
-                    enriched_accounts = []
+                    enriched = []
                     for acc in accounts:
-                        acc_id = acc.get("id")
-                        enriched_accounts.append({
-                            "username": acc.get("username", "Unknown"),
-                            "display_name": acc.get("display_name", ""),
-                            "topics": ", ".join(acc.get("topics", [])),
-                            "posts_per_day": acc.get("posts_per_day", 0),
-                            "total_posted": post_counts.get(acc_id, 0)
+                        enriched.append({
+                            'username': acc.get('username', 'Unknown'),
+                            'display_name': acc.get('display_name', ''),
+                            'persona': acc.get('persona', ''),
+                            'topics': ', '.join(acc.get('topics', [])),
+                            'posts_per_day': acc.get('posts_per_day', 0),
+                            'total_posted': post_counts.get(acc.get('id'), 0)
                         })
-                    meta["accounts_data"] = enriched_accounts
+                    meta['accounts_data'] = enriched
                 else:
-                    meta["accounts_data"] = []
+                    meta['accounts_data'] = []
             
             factory_sites.append(meta)
         except Exception as e:
