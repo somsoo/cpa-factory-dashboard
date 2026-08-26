@@ -26,7 +26,11 @@ for repo in repos:
     
     if meta_resp.status_code == 200:
         try:
-            meta = meta_resp.json()
+            import json
+            text = meta_resp.text
+            if text.startswith('\ufeff'):
+                text = text[1:]
+            meta = json.loads(text)
             meta["repo"] = repo_name
             if not meta.get("domain"):
                 meta["domain"] = f"{repo_name}.enjoy-onepage.com"
