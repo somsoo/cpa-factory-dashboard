@@ -21,9 +21,7 @@ repos = response.json()
 factory_sites = []
 
 def parse_bom_json(text):
-    if text.startswith('\\ufeff'):
-        text = text[1:]
-    return json.loads(text)
+    return json.loads(text.encode('utf-8').decode('utf-8-sig'))
 
 for repo in repos:
     repo_name = repo["name"]
