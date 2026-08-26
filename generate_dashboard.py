@@ -55,7 +55,6 @@ for repo in repos:
                     accounts = db_data.get("accounts", [])
                     posts = db_data.get("post_logs", [])
                     
-                    # Count posts per account
                     post_counts = {}
                     for p in posts:
                         acc_id = p.get("account_id")
@@ -118,24 +117,15 @@ else:
             readme_content += f"| **@{acc['username']}**<br>({disp}) | {persona_html} | {topics} | {acc['posts_per_day']} / day | **{acc['total_posted']}** |\n"
         readme_content += "\n"
 
-readme_content += f"
-## 🚀 Onepage Landings ({len(onepage_sites)} Sites)
-
-"
+readme_content += f"\n## 🚀 Onepage Landings ({len(onepage_sites)} Sites)\n\n"
 if not onepage_sites:
-    readme_content += "*No onepage sites registered yet.*
-
-"
+    readme_content += "*No onepage sites registered yet.*\n\n"
 else:
-    readme_content += "| Repository | Domain |
-"
-    readme_content += "|---|---|
-"
+    readme_content += "| Repository | Domain |\n"
+    readme_content += "|---|---|\n"
     for site in onepage_sites:
-        readme_content += f"| [{site['repo']}](https://github.com/{GITHUB_USER}/{site['repo']}) | [{site['domain']}]({site['url']}) |
-"
-    readme_content += "
-"
+        readme_content += f"| [{site['repo']}](https://github.com/{GITHUB_USER}/{site['repo']}) | [{site['domain']}]({site['url']}) |\n"
+    readme_content += "\n"
 
 with open("README.md", "w", encoding="utf-8") as f:
     f.write(readme_content)
