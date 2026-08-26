@@ -118,8 +118,24 @@ else:
             readme_content += f"| **@{acc['username']}**<br>({disp}) | {persona_html} | {topics} | {acc['posts_per_day']} / day | **{acc['total_posted']}** |\n"
         readme_content += "\n"
 
-readme_content += f"\n## 🚀 Onepage Landings ({len(onepage_sites)} Sites)\n\n"
-readme_content += "*No onepage sites registered yet.*\n\n" if not onepage_sites else ""
+readme_content += f"
+## 🚀 Onepage Landings ({len(onepage_sites)} Sites)
+
+"
+if not onepage_sites:
+    readme_content += "*No onepage sites registered yet.*
+
+"
+else:
+    readme_content += "| Repository | Domain |
+"
+    readme_content += "|---|---|
+"
+    for site in onepage_sites:
+        readme_content += f"| [{site['repo']}](https://github.com/{GITHUB_USER}/{site['repo']}) | [{site['domain']}]({site['url']}) |
+"
+    readme_content += "
+"
 
 with open("README.md", "w", encoding="utf-8") as f:
     f.write(readme_content)
