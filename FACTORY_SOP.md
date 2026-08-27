@@ -7,7 +7,7 @@
 ## 1. 🏷️ 메타데이터 및 대시보드 식별 (Metadata & Tracking)
 - **명찰 의무화:** 모든 리포지토리 루트에는 반드시 `.factory.json` 파일이 존재해야 함.
 - **포맷:** `{"type": "<cpa|coupang|economy|threads|onepage>", "name": "<저장소명>", "domain": "<접속URL>"}`
-- **목적:** 중앙 대시보드(`cpa-factory-dashboard`)가 GitHub API를 통해 실시간으로 팩토리 현황을 100% 추적하도록 보장.
+- **목적:** 중앙 대시보드(`total-system-dashboard`)가 GitHub API를 통해 실시간으로 팩토리 현황을 100% 추적하도록 보장.
 
 ## 2. 🧠 AI 환각 방지 및 시스템 구조 (Anti-Hallucination)
 - **Frontmatter 절대 금지:** 제미나이(AI)는 절대 YAML Frontmatter (`--- layout: post ... ---`)를 출력해서는 안 됨. 오직 Markdown 본문만 출력.
