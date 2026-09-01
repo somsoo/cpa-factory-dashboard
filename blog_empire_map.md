@@ -24,3 +24,7 @@
 ## 5. ?? 유틸리티 웹앱 설계도 (Utility App Blueprint)
 - **목적:** 원더윅스 계산기 등 단일 페이지 계산기/도구 사이트 횡전개
 - **상세 룰:** [blueprints/utility_app_blueprint.md](blueprints/utility_app_blueprint.md)
+
+## 6. ?? 쓰레드 릴스 자동화 설계도 (Threads Auto Blueprint)
+- **목적:** 쓰레드 자동 포스팅 및 답글(Reply)을 통한 쿠팡 파트너스 수익 창출
+- **상세 룰:** [blueprints/threads_blueprint.md](blueprints/threads_blueprint.md)
