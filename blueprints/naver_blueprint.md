@@ -17,3 +17,9 @@
 
 ## 4. 수익화 방식
 - **애드센스 불가:** 네이버 블로그는 애드센스 삽입이 불가능하므로, 플랫폼 자체 광고(애드포스트) 또는 별도 제휴 링크 삽입으로 대체.
+
+## 5. 2-Track Hybrid Framework (Concept + Fact)
+- **Objective:** Fulfill both the 'concept search intent' and 'latest news search intent' to maximize dwell time (SEO) and prevent hallucinations.
+- **[Chapter 1] Basic Concept Dictionary:** Use Gemini's inherent knowledge to easily explain the keyword's basic meaning and definition for beginners (e.g., What is FAR?).
+- **[Chapter 2] Latest Issue Fact-Check:** Inject (RAG) the scraped 'raw news article (Context)' into Gemini to summarize the latest trends and outlook based ONLY on news facts, without forcibly injecting unrelated high-CPC keywords (e.g., loans).
+- **Persona Control:** Do not use personas (e.g., '30s office worker') to distort news facts. Separate the persona and apply it only at the very end of the post as a 'personal review or thought'.
