@@ -23,3 +23,9 @@
 - **[Chapter 1] Basic Concept Dictionary:** Use Gemini's inherent knowledge to easily explain the keyword's basic meaning and definition for beginners (e.g., What is FAR?).
 - **[Chapter 2] Latest Issue Fact-Check:** Inject (RAG) the scraped 'raw news article (Context)' into Gemini to summarize the latest trends and outlook based ONLY on news facts, without forcibly injecting unrelated high-CPC keywords (e.g., loans).
 - **Persona Control:** Do not use personas (e.g., '30s office worker') to distort news facts. Separate the persona and apply it only at the very end of the post as a 'personal review or thought'.
+
+## 6. 에버그린(Evergreen) 키워드 3중 필터링 시스템
+- **목적:** 퀴즈, 운세 등 수명이 짧고 블로그 지수를 갉아먹는 일회용 키워드를 원천 차단하고 장기 트래픽을 유발하는 고품질 명사만 추출.
+- **[1단계] 표본 확대:** NCP 뉴스 API 호출 시 헤드라인을 15개에서 100개로 대폭 늘려 단기 어그로 기사의 비중을 희석시킴.
+- **[2단계] 네거티브 프롬프팅:** 제미나이 추출 시, 퀴즈, 캐시워크 같은 단발성 키워드를 강제로 배제하고 에버그린 명사만 뽑도록 지시.
+- **[3단계] 파이썬 하드 블랙리스트:** 코드 내 배열(퀴즈, 정답, 비트버니 등)을 통해 스팸 단어가 포함되면 강제로 폐기함.
