@@ -24,4 +24,19 @@
 6. **전자동화(Automation) 파이프라인 규칙:**
    - **스케줄링:** 모든 블로그(CPA, 전문 등)는 로컬 컴퓨터가 꺼져 있어도 작동하도록 GitHub Actions를 통해 100% 클라우드 자동화되어야 함.
    - **크론(Cron) 주기 분산:** 여러 개의 블로그가 동시에 API를 호출하여 Rate Limit(429 에러)에 걸리는 것을 방지하기 위해, CPA 블로그뿐만 아니라 쓰레드(Threads), 전문 블로그, 네이버 등 **모든 자동화 파이프라인이 겹치지 않도록 전사적(Global)으로 크론(Cron) 분(Minute) 단위를 쪼개서 분산 배치(Staggered)** 할 것. (예: 쓰레드는 매시 정각 00분, 30분 / 전문 블로그는 15분 / CPA 블로그들은 05분, 10분, 20분, 40분 등)
+
+   - **스케줄 난수 배정 알고리즘 (AI 필수 적용 사항):**
+     새로운 블로그를 생성할 때 AI는 임의로 시간을 정하지 말고, 반드시 아래의 Python 해시 알고리즘을 실행하여 고유 크론(Cron) 시간을 추출한 뒤 `main.yml`에 하드코딩해야 함.
+     ```python
+     import hashlib
+     def get_schedule(repo_name):
+         allowed_minutes = [m for m in range(60) if m not in (0, 30)] # 쓰레드 보호
+         hash_min = int(hashlib.md5(repo_name.encode('utf-8')).hexdigest(), 16)
+         minute = allowed_minutes[hash_min % len(allowed_minutes)]
+         hash_hr = int(hashlib.md5((repo_name + 'hour').encode('utf-8')).hexdigest(), 16)
+         hour1 = hash_hr % 12
+         hour2 = hour1 + 12
+         return f"{minute} {hour1},{hour2} * * *"
+     ```
+
    - **자동 배포:** 스크립트 실행 완료 후 생성된 마크다운과 이미지 에셋은 자동으로 git commit 및 push 되어 즉각 라이브 서버에 반영되도록 워크플로우를 구성할 것.
