@@ -1,39 +1,67 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OnePage Factory 관제실</title>
+    <title>OnePage Factory 관제실 (Clean Version)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); min-height: 100vh; font-family: 'Pretendard', sans-serif; }
+        body { background: #0f172a; min-height: 100vh; font-family: 'Pretendard', sans-serif; color: #cbd5e1; }
+        .truncate-2-lines { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     </style>
 </head>
 <body class="p-4 sm:p-10">
-    <div class="max-w-7xl mx-auto">
-        <header class="flex justify-between items-center mb-8 border-b border-white/20 pb-4">
+    <div class="max-w-6xl mx-auto">
+        <header class="flex justify-between items-end mb-6 border-b border-slate-700 pb-4">
             <div>
-                <h1 class="text-3xl font-extrabold text-white tracking-tight">OnePage Factory 에이전트 관제실</h1>
-                <p class="text-sm text-blue-200 mt-1">서브 에이전트 실시간 모니터링 시스템 (자동 새로고침 5초)</p>
+                <h1 class="text-3xl font-bold text-white tracking-tight">OnePage Factory 팩토리 관제실</h1>
+                <p class="text-sm text-slate-400 mt-1">실시간 에이전트 요원 현황 (간략 보기)</p>
             </div>
             <div class="text-right">
-                <p class="text-xs text-blue-300 uppercase tracking-widest">Last Updated</p>
-                <p id="last-updated" class="text-xl font-bold text-white font-mono">--:--:--</p>
+                <p class="text-xs text-slate-500 uppercase tracking-widest">마지막 동기화</p>
+                <p id="last-updated" class="text-lg font-bold text-emerald-400 font-mono">--:--:--</p>
             </div>
         </header>
         
-        <div id="agent-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <p class="text-white">상태 데이터를 불러오는 중...</p>
+        <!-- RUNNING AGENTS -->
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold text-white mb-4 flex items-center">
+                <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse mr-2"></span>
+                실시간 가동 중인 요원 (Active)
+            </h2>
+            <div class="bg-slate-800 rounded-xl overflow-hidden shadow-lg border border-slate-700">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-900/50 text-slate-400 text-sm">
+                            <th class="p-4 font-medium w-1/4">요원명 / ID</th>
+                            <th class="p-4 font-medium w-3/4">최근 보고 내용</th>
+                        </tr>
+                    </thead>
+                    <tbody id="active-agents" class="divide-y divide-slate-700">
+                        <tr><td colspan="2" class="p-4 text-center">불러오는 중...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- IDLE/FINISHED AGENTS -->
+        <div>
+            <h2 class="text-lg font-medium text-slate-400 mb-3 flex items-center">
+                <span class="w-2 h-2 rounded-full bg-slate-500 mr-2"></span>
+                임무 완료 / 대기조 (Completed)
+            </h2>
+            <div class="bg-slate-800/50 rounded-xl overflow-hidden shadow border border-slate-700/50">
+                <table class="w-full text-left border-collapse text-sm text-slate-500">
+                    <tbody id="completed-agents" class="divide-y divide-slate-700/50">
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
     <script>
         function escapeHtml(unsafe) {
-            return (unsafe || '')
-                 .replace(/&/g, "&amp;")
-                 .replace(/</g, "&lt;")
-                 .replace(/>/g, "&gt;")
-                 .replace(/"/g, "&quot;")
-                 .replace(/'/g, "&#039;");
+            return (unsafe || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
 
         async function updateStatus() {
@@ -41,37 +69,61 @@
                 const res = await fetch('onepage_status.json?' + new Date().getTime());
                 const data = await res.json();
                 
-                const timeStr = new Date(data.last_updated).toLocaleTimeString();
-                document.getElementById('last-updated').textContent = timeStr;
+                document.getElementById('last-updated').textContent = new Date(data.last_updated).toLocaleTimeString();
                 
-                const grid = document.getElementById('agent-grid');
-                grid.innerHTML = '';
+                const activeBody = document.getElementById('active-agents');
+                const completedBody = document.getElementById('completed-agents');
+                activeBody.innerHTML = '';
+                completedBody.innerHTML = '';
                 
-                if (!data.agents || data.agents.length === 0) {
-                    grid.innerHTML = '<p class="text-white">투입된 에이전트가 없거나 작업이 모두 완료되었습니다.</p>';
-                    return;
-                }
+                let activeCount = 0;
+                let completedCount = 0;
+
+                // Sort by ID (descending) to show newest first
+                data.agents.sort((a,b) => b.id.localeCompare(a.id));
 
                 data.agents.forEach(agent => {
-                    const isIdle = agent.status.includes('IDLE') || agent.status.includes('FINISHED');
-                    const badgeColor = isIdle ? 'bg-slate-500' : 'bg-green-500 animate-pulse';
-                    const statusText = isIdle ? '대기/완료' : '작업중';
+                    // Quick heuristic for finished if daemon missed it
+                    const msg = agent.last_message || '';
+                    let isIdle = agent.status.includes('IDLE') || agent.status.includes('FINISHED');
+                    if(msg.includes('finished with result') || msg.includes('완료') || msg.includes('종료')) {
+                        isIdle = true;
+                    }
                     
-                    const card = document.createElement('div');
-                    card.className = "bg-white/10 backdrop-blur-lg border border-white/20 p-5 rounded-2xl shadow-lg hover:bg-white/15 transition-all flex flex-col";
-                    card.innerHTML = `
-                        <div class="flex justify-between items-center mb-3">
-                            <h3 class="text-lg font-bold text-white">${escapeHtml(agent.name)}</h3>
-                            <span class="${badgeColor} text-xs text-white px-2 py-1 rounded-full font-semibold shadow-sm">${statusText}</span>
-                        </div>
-                        <p class="text-xs text-blue-200 mb-2 font-mono bg-black/20 inline-block px-2 py-1 rounded w-max">ID: ${escapeHtml(agent.id)}</p>
-                        <div class="bg-black/40 p-3 rounded-lg text-sm text-green-300 font-mono overflow-auto flex-grow h-40 mt-2 break-all leading-relaxed whitespace-pre-wrap">${escapeHtml(agent.last_message)}</div>
-                    `;
-                    grid.appendChild(card);
+                    const row = document.createElement('tr');
+                    
+                    if (!isIdle) {
+                        activeCount++;
+                        row.className = "hover:bg-slate-700/30 transition-colors";
+                        row.innerHTML = \
+                            <td class="p-4 align-top">
+                                <div class="font-bold text-white">\</div>
+                                <div class="text-xs text-slate-500 font-mono mt-1">\...</div>
+                            </td>
+                            <td class="p-4 align-top">
+                                <div class="text-sm text-emerald-300 font-mono whitespace-pre-wrap truncate-2-lines" title="\">\</div>
+                            </td>
+                        \;
+                        activeBody.appendChild(row);
+                    } else {
+                        completedCount++;
+                        row.className = "hover:bg-slate-700/30 transition-colors opacity-70";
+                        row.innerHTML = \
+                            <td class="p-3 w-1/4 align-top">
+                                <div class="text-slate-400 font-medium">\</div>
+                            </td>
+                            <td class="p-3 w-3/4 align-top">
+                                <div class="text-xs font-mono truncate whitespace-nowrap overflow-hidden text-slate-500" title="\">\</div>
+                            </td>
+                        \;
+                        completedBody.appendChild(row);
+                    }
                 });
-            } catch (e) {
-                console.error(e);
-            }
+
+                if (activeCount === 0) activeBody.innerHTML = '<tr><td colspan="2" class="p-4 text-center text-slate-500">현재 작업 중인 요원이 없습니다.</td></tr>';
+                if (completedCount === 0) completedBody.innerHTML = '<tr><td colspan="2" class="p-4 text-center text-slate-500">완료된 내역이 없습니다.</td></tr>';
+
+            } catch (e) {}
         }
         setInterval(updateStatus, 5000);
         updateStatus();
