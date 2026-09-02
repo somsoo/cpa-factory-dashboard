@@ -1,40 +1,16 @@
-# 🏭 Factory Control Dashboard
+﻿# Total System Dashboard
 
-> Last Updated: 2026-09-02 13:51:01 (UTC)
+원페이지 팩토리 시스템 전체를 통합 관리하고 모니터링하는 메인 관제 저장소입니다.
 
-## 📈 CPA Blogs (15 Sites)
+## 📂 폴더 구조 (Directory Structure)
 
-| Repository | Domain | Active Campaigns |
-|---|---|---|
-| [cpa-agri-appraiser](https://github.com/somsoo/cpa-agri-appraiser) | [farm-job.enjoy-onepage.com](https://farm-job.enjoy-onepage.com) | 2 |
-| [cpa-auto-drive](https://github.com/somsoo/cpa-auto-drive) | [car.enjoy-onepage.com](https://car.enjoy-onepage.com) | 9 |
-| [cpa-baby-fair](https://github.com/somsoo/cpa-baby-fair) | [baby.enjoy-onepage.com](https://baby.enjoy-onepage.com) | 15 |
-| [cpa-biz-owner](https://github.com/somsoo/cpa-biz-owner) | [biz.enjoy-onepage.com](https://biz.enjoy-onepage.com) | 11 |
-| [cpa-camping-expo](https://github.com/somsoo/cpa-camping-expo) | [camp.enjoy-onepage.com](https://camp.enjoy-onepage.com) | 1 |
-| [cpa-cert-blog](https://github.com/somsoo/cpa-cert-blog) | [blog-job.enjoy-onepage.com](https://blog-job.enjoy-onepage.com) | 2 |
-| [cpa-edu-cert](https://github.com/somsoo/cpa-edu-cert) | [edu-job.enjoy-onepage.com](https://edu-job.enjoy-onepage.com) | 18 |
-| [cpa-finance-wealth](https://github.com/somsoo/cpa-finance-wealth) | [wealth.enjoy-onepage.com](https://wealth.enjoy-onepage.com) | 5 |
-| [cpa-health-info](https://github.com/somsoo/cpa-health-info) | [health.enjoy-onepage.com](https://health.enjoy-onepage.com) | 15 |
-| [cpa-home-care](https://github.com/somsoo/cpa-home-care) | [clean.enjoy-onepage.com](https://clean.enjoy-onepage.com) | 19 |
-| [cpa-interior-expo](https://github.com/somsoo/cpa-interior-expo) | [interior.enjoy-onepage.com](https://interior.enjoy-onepage.com) | 6 |
-| [cpa-lifestyle-match](https://github.com/somsoo/cpa-lifestyle-match) | [match.enjoy-onepage.com](https://match.enjoy-onepage.com) | 14 |
-| [cpa-pet-fair](https://github.com/somsoo/cpa-pet-fair) | [pet.enjoy-onepage.com](https://pet.enjoy-onepage.com) | 2 |
-| [cpa-smart-it](https://github.com/somsoo/cpa-smart-it) | [it.enjoy-onepage.com](https://it.enjoy-onepage.com) | 8 |
-| [cpa-tech-expo](https://github.com/somsoo/cpa-tech-expo) | [data.enjoy-onepage.com](https://data.enjoy-onepage.com) | 2 |
+- **/monitoring/**
+  - onepage_office.html : 2D 가상 오피스 기반 실시간 모니터링 웹 대시보드
+  - onepage_status.json : 에이전트 작업 상태가 기록되는 데이터 파일 (60초 단위 갱신)
+  - sync_office_monitor.py : 로컬 로그를 분석하여 상태를 업데이트하고 GitHub에 Push하는 데몬 스크립트
 
-## 📱 Threads Bots (0 Repositories)
-
-*No bots registered yet.*
-
-
-## 🚀 Onepage Landings (6 Sites)
-
-| Repository | Domain |
-|---|---|
-| [aicostcalc_site](https://github.com/somsoo/aicostcalc_site) | [aiapi.enjoy-onepage.com](https://aiapi.enjoy-onepage.com) |
-| [freelancer_tax_site](https://github.com/somsoo/freelancer_tax_site) | [tax-33.enjoy-onepage.com](https://tax-33.enjoy-onepage.com) |
-| [smallbizcalc_site](https://github.com/somsoo/smallbizcalc_site) | [smallbiz.enjoy-onepage.com](https://smallbiz.enjoy-onepage.com) |
-| [solar_calc_site](https://github.com/somsoo/solar_calc_site) | [solar.enjoy-onepage.com](https://solar.enjoy-onepage.com) |
-| [sudokuportal](https://github.com/somsoo/sudokuportal) | [sudokuportal.enjoy-onepage.com](https://sudokuportal.enjoy-onepage.com) |
-| [wonderweeks_site](https://github.com/somsoo/wonderweeks_site) | [wonderweeksportal.enjoy-onepage.com](https://wonderweeksportal.enjoy-onepage.com) |
+- **/rules/**
+  - rchitecture_rules.md : 시스템 구조 및 배포 원칙 (무서버, GitHub Pages 등)
+  - seo_guidelines.md : 검색엔진 최적화 및 법적 필수 페이지(약관 등) 가이드라인
+  - ui_ux_standards.md : Tailwind CSS 및 UI 레이아웃 표준 규칙
 
