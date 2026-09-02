@@ -1,0 +1,29 @@
+{
+  "last_updated": "2026-09-02T14:36:00+09:00",
+  "agents": {
+    "frontend_dev": {
+      "name": "Frontend Dev",
+      "emoji": "🧑‍💻",
+      "status": "IDLE",
+      "message": "대기 중 (업무 없음)"
+    },
+    "seo_copywriter": {
+      "name": "SEO Planner",
+      "emoji": "✍️",
+      "status": "IDLE",
+      "message": "대기 중 (업무 없음)"
+    },
+    "qa_reviewer": {
+      "name": "QA Reviewer",
+      "emoji": "🕵️",
+      "status": "IDLE",
+      "message": "대기 중 (업무 없음)"
+    },
+    "main_agent": {
+      "name": "Factory Manager (Main)",
+      "emoji": "🤖",
+      "status": "RUNNING",
+      "message": "가상 오피스 UI 및 동기화 스크립트 구축 중..."
+    }
+  }
+}
