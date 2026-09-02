@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -59,14 +59,14 @@
                     
                     const card = document.createElement('div');
                     card.className = "bg-white/10 backdrop-blur-lg border border-white/20 p-5 rounded-2xl shadow-lg hover:bg-white/15 transition-all flex flex-col";
-                    card.innerHTML = \
+                    card.innerHTML = `
                         <div class="flex justify-between items-center mb-3">
-                            <h3 class="text-lg font-bold text-white">\</h3>
-                            <span class="\ text-xs text-white px-2 py-1 rounded-full font-semibold shadow-sm">\</span>
+                            <h3 class="text-lg font-bold text-white">${escapeHtml(agent.name)}</h3>
+                            <span class="${badgeColor} text-xs text-white px-2 py-1 rounded-full font-semibold shadow-sm">${statusText}</span>
                         </div>
-                        <p class="text-xs text-blue-200 mb-2 font-mono bg-black/20 inline-block px-2 py-1 rounded w-max">ID: \</p>
-                        <div class="bg-black/40 p-3 rounded-lg text-sm text-green-300 font-mono overflow-auto flex-grow h-40 mt-2 break-all leading-relaxed whitespace-pre-wrap">\</div>
-                    \;
+                        <p class="text-xs text-blue-200 mb-2 font-mono bg-black/20 inline-block px-2 py-1 rounded w-max">ID: ${escapeHtml(agent.id)}</p>
+                        <div class="bg-black/40 p-3 rounded-lg text-sm text-green-300 font-mono overflow-auto flex-grow h-40 mt-2 break-all leading-relaxed whitespace-pre-wrap">${escapeHtml(agent.last_message)}</div>
+                    `;
                     grid.appendChild(card);
                 });
             } catch (e) {
