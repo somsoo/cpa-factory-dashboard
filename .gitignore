@@ -1,0 +1,3 @@
+﻿# Ignore global secrets file for security
+global_secrets.env
+.env
