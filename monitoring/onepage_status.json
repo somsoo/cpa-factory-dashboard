@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-02T15:20:33.267319",
+  "last_updated": "2026-09-02T15:20:38.535820",
   "agents": [
     {
       "id": "system",
@@ -192,6 +192,12 @@
       "name": "에이전트 [983e8c]",
       "status": "RUNNING",
       "last_message": "# 📈 주식 평단가 계산기 SEO 키워드 전략 및 사일로(Silo) 구조 기획서\n\n> **작성자**: One-Page Utility App SEO Project Manager  \n> **전략 프레임워크**: Topical Authority(주제 권위도) & Content Silo(사일로 내부 링크 아키텍처)  \n> **타겟 검색엔진**: Google Korea, Naver Search  \n\n---\n\n## 1. SEO 전략 프레임워크 및 사일로 구조 (Architecture Overview)\n\n주식 평단가 계산기 시장은 단순 유틸리티 도구만으로는 체류시간(Dwell Time)과 색인 깊이(Index Depth)가 부족하여 검색엔진 순위에서 밀리기 쉽습니다.  \n본 기획은 **Pillar-Cluster(기둥-군집) 모델**을 기반으로 **메인 계산기(Pillar App)**와 **5대 롱테일 가이드(Cluster Pages)**를 촘촘한 양방향 내부 링크로 결합하여 도메인의 **Topical Authority**를 극대화합니다.\n\n```mermaid\nflowchart TD\n    subgraph Pillar [\"🏆 Pillar Page (Root Main App)\"]\n        MainTool[\"/ (메인 주식 평단가 통합 계산기)<br/>- N차 분할매수<br/>- 목표 평단가 역산<br/>- 미국주식 달러/환율<br/>- 수수료/손익분기점\"]\n    end\n\n    subgraph Cluster [\"📚 Content Silo Cluster (Guides)\"]\n        G1[\"/guides/stock-dilution-formula<br/>(1) 물타기 계산 공식 & 엑셀 수식\"]\n        G2[\"/guides/target-average-price-strategy<br/>(2) 목표 평단가 역산 & 자금관리\"]\n        G3[\"/guides/us-stock-dollar-average-calculator<br/>(3) 미국주식 달러 평단가 & 환율\"]\n        G4[\"/guides/averaging-down-vs-averaging-up-dca<br/>(4) 물타기 vs 불타기 vs DCA 비교\"]\n        G5[\"/guides/stock-fee-tax-break-even<br/>(5) 수수료·거래세 & 손익분기점\"]\n    end\n\n    MainTool <==>|\"상세 공식 및 전략 가이\n<truncated 20883 bytes>\n미국 주식 달러 및 실시간 환율 연동\",\n    \"증권사 수수료 및 거래세 포함 손익분기점 계산\"\n  ]\n}\n</script>\n```\n\n#### [가이드 페이지 공통] FAQPage & BreadcrumbList 구조화 데이터 (JSON-LD)\n```html\n<script type=\"application/ld+json\">\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"FAQPage\",\n  \"mainEntity\": [\n    {\n      \"@type\": \"Question\",\n      \"name\": \"주식 물타기 시 평단가는 어떻게 계산하나요?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"기존 매수금액(기존 단가 × 기존 수량)과 추가 매수금액(추가 단가 × 추가 수량)의 합을 총 보유 수량으로 나누는 가중평균 방식으로 계산합니다.\"\n      }\n    }\n  ]\n}\n</script>\n```\n\n#### Core Web Vitals 및 성능 가이드\n* **INP (Interaction to Next Paint):** 사용자 입력 시 연산 지연 없도록 React `useDeferredValue` 또는 Debounce(150ms) 적용하여 **INP < 150ms** 보장\n* **LCP (Largest Contentful Paint):** 계산기 UI 컴포넌트 렌더링에 외부 폰트/무거운 JS 블로킹 배제하여 **LCP < 1.0s** 달성\n* **CLS (Cumulative Layout Shift):** 탭 전환 및 결과 출력 컨테이너에 `min-height`를 지정하여 레이아웃 흔들림 **CLS 0** 유지\n\n---\n\n## 7. 결론 및 개발 착수 로드맵\n\n1. **Step 1 (Core Tool Dev):** `calculateAverageDown` 및 `calculateTargetReverse` 엔진과 4대 탭 반응형 UI 구축\n2. **Step 2 (Local Storage & Share):** 종목별 포트폴리오 저장 슬롯 및 결과 캡처 다운로드 기능 탑재\n3. **Step 3 (Content Silo Markdown Pub):** 5대 서브 가이드 작성 및 양방향 내부 링크(`<a>` 태그 앵커 텍스트) 삽입\n4. **Step 4 (Structured Data & Indexing):** `WebApplication`, `FAQPage`, `BreadcrumbList` JSON-LD 주입 및 Google Search Console / Naver Search Advisor 사이트맵 제출\n\n본 기획안을 바탕으로 개발과 콘텐츠 발행을 진행하면 검색 점유율 1위 및 높은 체류시간을 확보할 수 있습니다.\n</SYSTEM_MESSAGE>"
+    },
+    {
+      "id": "83f901ee-8d13-43da-b7cc-bda0e61ee4d2",
+      "name": "에이전트 [83f901]",
+      "status": "RUNNING",
+      "last_message": "`stock-average-down-calc/index.html` 파일에 SEO 카피라이터의 기획안과 UI 마이크로카피를 100% 반영하여 업데이트를 완료했습니다.\n\n- **메타태그 반영**: 확정된 `<title>`과 `<meta name=\"description\">` 적용\n- **UI 마이크로카피 및 디자인**:\n  - 글래스모피즘(Glassmorphism) 스타일 적용 (Tailwind CSS)\n  - 메인 헤드라인: \"더 사면 평단 얼마 될까? 내 종목 탈출각 견적기\"\n  - 버튼 CTA: \"🚨 탈출각 견적 뽑기\" 및 \"📋 갤러리에 구조 요청 (결과 복사)\" 적용\n  - 빠른 시드 추가 버튼: +10만, +100만, +500만, 🔥 풀매수 기능 추가\n  - 손실률에 따른 동적 피드백 멘트 노출 적용 완료 (-50% \"침몰 직전!\", -30% \"한강물 온도 어때요?\" 등)\n- CNAME 파일(`stock-average-down-calc.example.com`)도 성공적으로 생성되었습니다.\n\n[index.html](file:///C:/Users/hsm29/Documents/OnePage_Factory/stock-average-down-calc/index.html) 파일을 확인하실 수 있습니다.\n</SYSTEM_MESSAGE>"
     }
   ]
 }
