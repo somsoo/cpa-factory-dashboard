@@ -78,7 +78,7 @@ def main():
             print("모든 에이전트 작업 완료. 리소스(토큰) 절약을 위해 관제 데몬을 종료합니다.")
             break
             
-        time.sleep(30)
+        time.sleep(15)
 
 if __name__ == "__main__":
     main()
