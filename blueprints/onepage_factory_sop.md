@@ -41,7 +41,8 @@
 - 검증: 
   1. `gh` CLI를 통한 깃허브 저장소 자동 생성 및 Git Push.
   2. **[Pages 활성화]** 깃허브 페이지 호스팅은 기본이 Off 상태이므로, 반드시 `gh api`를 호출하여 Pages 호스팅 스위치를 원격으로 강제 On 시킬 것.
-  3. **[DNS 커스텀 도메인]** 기본 github.io 주소가 아닌 회장님의 **개인 커스텀 도메인(Custom Domain)**을 씌우기 위해, 루트 경로에 `CNAME` 파일을 굽고 DNS 연동 API 설정을 완벽히 처리할 것.
+  3. **[Cloudflare 자동화]** 시스템 환경 변수의 `CLOUDFLARE_API_TOKEN`을 조회하여 회장님의 커스텀 도메인(예: `enjoy-onepage.com`)의 Zone ID를 파악하고, Cloudflare API로 CNAME(프록시 ON)을 자동 등록할 것.
+  4. **[GitHub CNAME 연동]** 깃허브 저장소 루트에 `CNAME` 파일을 커밋하고, `gh api repos/{owner}/{repo}/pages`를 통해 cname 속성을 덮어씌울 것.
 
 ### Step 9: 📢 그로스 해커 (Growth Hacker)
 - 역할: 배포 직후 초기 트래픽 폭발 유도.
