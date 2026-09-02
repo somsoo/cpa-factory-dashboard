@@ -1,11 +1,11 @@
 {
-  "last_updated": "2026-09-02T15:18:54.843179",
+  "last_updated": "2026-09-02T15:19:06.870290",
   "agents": [
     {
       "id": "system",
       "name": "에이전트 [system]",
       "status": "RUNNING",
-      "last_message": "[Notice] All your subagents and background tasks have been stopped due to server restart. If you want a subagent to continue working, it needs to be revived by sending it a new message. If resuming work, please check on status and restart as needed.\n</SYSTEM_MESSAGE>"
+      "last_message": "The subagent Accessibility Expert (self) with id \"8e38b129-e6c1-4f70-b876-be45656040c1\" encountered an error and has either stopped or failed to start execution: failed to construct executor: planner config is not declarative: not set\n</SYSTEM_MESSAGE>"
     },
     {
       "id": "556cda44-560c-4892-a223-a278ce5d3249",
