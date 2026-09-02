@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnePage Factory 관제실</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); min-height: 100vh; font-family: 'Pretendard', sans-serif; }
+    </style>
+</head>
+<body class="p-4 sm:p-10">
+    <div class="max-w-7xl mx-auto">
+        <header class="flex justify-between items-center mb-8 border-b border-white/20 pb-4">
+            <div>
+                <h1 class="text-3xl font-extrabold text-white tracking-tight">OnePage Factory 에이전트 관제실</h1>
+                <p class="text-sm text-blue-200 mt-1">서브 에이전트 실시간 모니터링 시스템 (자동 새로고침 5초)</p>
+            </div>
+            <div class="text-right">
+                <p class="text-xs text-blue-300 uppercase tracking-widest">Last Updated</p>
+                <p id="last-updated" class="text-xl font-bold text-white font-mono">--:--:--</p>
+            </div>
+        </header>
+        
+        <div id="agent-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <p class="text-white">상태 데이터를 불러오는 중...</p>
+        </div>
+    </div>
+    <script>
+        function escapeHtml(unsafe) {
+            return (unsafe || '')
+                 .replace(/&/g, "&amp;")
+                 .replace(/</g, "&lt;")
+                 .replace(/>/g, "&gt;")
+                 .replace(/"/g, "&quot;")
+                 .replace(/'/g, "&#039;");
+        }
+
+        async function updateStatus() {
+            try {
+                const res = await fetch('onepage_status.json?' + new Date().getTime());
+                const data = await res.json();
+                
+                const timeStr = new Date(data.last_updated).toLocaleTimeString();
+                document.getElementById('last-updated').textContent = timeStr;
+                
+                const grid = document.getElementById('agent-grid');
+                grid.innerHTML = '';
+                
+                if (!data.agents || data.agents.length === 0) {
+                    grid.innerHTML = '<p class="text-white">투입된 에이전트가 없거나 작업이 모두 완료되었습니다.</p>';
+                    return;
+                }
+
+                data.agents.forEach(agent => {
+                    const isIdle = agent.status.includes('IDLE') || agent.status.includes('FINISHED');
+                    const badgeColor = isIdle ? 'bg-slate-500' : 'bg-green-500 animate-pulse';
+                    const statusText = isIdle ? '대기/완료' : '작업중';
+                    
+                    const card = document.createElement('div');
+                    card.className = "bg-white/10 backdrop-blur-lg border border-white/20 p-5 rounded-2xl shadow-lg hover:bg-white/15 transition-all flex flex-col";
+                    card.innerHTML = `
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-lg font-bold text-white">${escapeHtml(agent.name)}</h3>
+                            <span class="${badgeColor} text-xs text-white px-2 py-1 rounded-full font-semibold shadow-sm">${statusText}</span>
+                        </div>
+                        <p class="text-xs text-blue-200 mb-2 font-mono bg-black/20 inline-block px-2 py-1 rounded w-max">ID: ${escapeHtml(agent.id)}</p>
+                        <div class="bg-black/40 p-3 rounded-lg text-sm text-green-300 font-mono overflow-auto flex-grow h-40 mt-2 break-all leading-relaxed whitespace-pre-wrap">${escapeHtml(agent.last_message)}</div>
+                    `;
+                    grid.appendChild(card);
+                });
+            } catch (e) {
+                console.error(e);
+            }
+        }
+        setInterval(updateStatus, 5000);
+        updateStatus();
+    </script>
+</body>
+</html>
