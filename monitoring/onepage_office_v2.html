@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -54,17 +54,17 @@
                         activeCount++;
                         const row = document.createElement('tr');
                         row.className = "hover:bg-slate-800/50 transition-colors";
-                        row.innerHTML = \
-                            <td class="py-3 pr-4 font-bold text-slate-200">\</td>
+                        row.innerHTML = `
+                            <td class="py-3 pr-4 font-bold text-slate-200">${escapeHtml(agent.name)}</td>
                             <td class="py-3 px-2 text-center"><span class="bg-emerald-500/20 text-emerald-400 text-xs px-2 py-1 rounded border border-emerald-500/30">작업중</span></td>
-                            <td class="py-3 pl-4 text-slate-400 font-mono truncate max-w-xs" title="\">\</td>
-                        \;
+                            <td class="py-3 pl-4 text-slate-400 font-mono truncate max-w-xs" title="${escapeHtml(msg)}">${escapeHtml(msg)}</td>
+                        `;
                         tbody.appendChild(row);
                     }
                 });
 
                 if (activeCount === 0) tbody.innerHTML = '<tr><td colspan="3" class="py-8 text-center text-slate-500">현재 작업 중인 요원이 없습니다.</td></tr>';
-            } catch (e) {}
+            } catch (e) { console.error(e); }
         }
         setInterval(updateStatus, 3000);
         updateStatus();
