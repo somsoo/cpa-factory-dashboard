@@ -10,7 +10,7 @@ headers = {"Accept": "application/vnd.github.v3+json"}
 if TOKEN:
     headers["Authorization"] = f"token {TOKEN}"
 
-repos_url = f"https://api.github.com/user/repos?per_page=100&affiliation=owner"
+repos_url = f"https://api.github.com/users/somsoo/repos?per_page=100"
 response = requests.get(repos_url, headers=headers)
 
 if response.status_code != 200:
